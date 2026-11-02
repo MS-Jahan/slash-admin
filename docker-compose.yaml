@@ -1,0 +1,16 @@
+# Optional: only needed if you use Coolify's "Docker Compose" build pack.
+# With the plain "Dockerfile" build pack you do not need this file.
+services:
+  slash-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_APP_DEFAULT_ROUTE: ${VITE_APP_DEFAULT_ROUTE:-/workbench}
+        VITE_APP_PUBLIC_PATH: ${VITE_APP_PUBLIC_PATH:-/}
+        VITE_APP_API_BASE_URL: ${VITE_APP_API_BASE_URL:-/api}
+        VITE_APP_ROUTER_MODE: ${VITE_APP_ROUTER_MODE:-frontend}
+    restart: unless-stopped
+    # Do not publish ports; Coolify's proxy (Traefik/Caddy) routes to port 80
+    expose:
+      - "80"
